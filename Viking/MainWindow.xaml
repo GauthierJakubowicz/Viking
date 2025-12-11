@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Viking"
         mc:Ignorable="d"
-        Title="Menu" Height="400" Width="800">
+        Title="Menu" Height="800" Width="1600">
     <Canvas>
+        <Image Source="/img/snow_background.jpg" />
 
-        <Label Content="Viking" Canvas.Left="300" Canvas.Top="83" HorizontalAlignment="Center" VerticalAlignment="Top" Width="200" Height="26" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+        <Label x:Name="labTitre" Content="Viking" Canvas.Left="700" Canvas.Top="131" HorizontalAlignment="Left" VerticalAlignment="Top" Width="Auto" Height="Auto" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="40"/>
     </Canvas>
 </Window>
