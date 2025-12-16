@@ -4,6 +4,7 @@
         xmlns:local="clr-namespace:VikingGame"
         Title="Viking Game" Height="600" Width="1000">
     <Grid x:Name="MainGrid">
+        <Image Source="/background_glacial_mountains.png" />
         <local:UCMenu/>
     </Grid>
 </Window>

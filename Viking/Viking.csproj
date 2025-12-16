@@ -16,11 +16,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="background_glacial_mountains.png" />
     <None Remove="Viking Portrait.png" />
     <None Remove="Viking%28Ice Axe%29-Sheet.png" />
     <None Remove="Viking%28Ice Axe%29NoEffect-Sheet.png" />
     <None Remove="Viking-Sheet.png" />
     <None Remove="VikingNoEffect-Sheet.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="background_glacial_mountains.png" />
   </ItemGroup>
 
 </Project>
