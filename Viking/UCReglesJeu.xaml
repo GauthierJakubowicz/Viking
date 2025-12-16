@@ -5,7 +5,6 @@
         <TextBlock Text="Règles du jeu Viking :" FontSize="24" Margin="10"/>
         <TextBlock Text="1. Utilise les flèches pour te déplacer." Margin="5"/>
         <TextBlock Text="2. Espace pour attaquer." Margin="5"/>
-        <TextBlock Text="3. D pour mourir, I pour idle." Margin="5"/>
         <Button Content="Retour au menu" Click="BtnBack_Click" Width="200" Margin="20"/>
     </StackPanel>
 </UserControl>

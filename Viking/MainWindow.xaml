@@ -4,7 +4,6 @@
         xmlns:local="clr-namespace:VikingGame"
         Title="Viking Game" Height="600" Width="1000">
     <Grid x:Name="MainGrid">
-        <!-- On démarre par afficher le menu -->
         <local:UCMenu/>
     </Grid>
 </Window>

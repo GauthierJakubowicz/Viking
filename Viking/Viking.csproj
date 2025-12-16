@@ -10,10 +10,20 @@
 
   <ItemGroup>
     <None Remove="img\snow_background.jpg" />
+    <None Remove="Viking Portrait.png" />
+    <None Remove="Viking%28Ice Axe%29-Sheet.png" />
+    <None Remove="Viking%28Ice Axe%29NoEffect-Sheet.png" />
+    <None Remove="Viking-Sheet.png" />
+    <None Remove="VikingNoEffect-Sheet.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="img\snow_background.jpg" />
+    <Resource Include="Viking Portrait.png" />
+    <Resource Include="Viking(Ice Axe)-Sheet.png" />
+    <Resource Include="Viking(Ice Axe)NoEffect-Sheet.png" />
+    <Resource Include="Viking-Sheet.png" />
+    <Resource Include="VikingNoEffect-Sheet.png" />
   </ItemGroup>
 
 </Project>
