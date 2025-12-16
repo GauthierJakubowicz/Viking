@@ -9,16 +9,21 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Viking
+
+namespace VikingGame
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        // Méthode pour changer de page
+        public void ShowPage(UserControl page)
+        {
+            MainGrid.Children.Clear();
+            MainGrid.Children.Add(page);
         }
     }
 }

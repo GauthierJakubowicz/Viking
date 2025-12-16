@@ -13,16 +13,18 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Viking
+namespace VikingGame
 {
-    /// <summary>
-    /// Logique d'interaction pour UCReglesJeu.xaml
-    /// </summary>
     public partial class UCReglesJeu : UserControl
     {
         public UCReglesJeu()
         {
             InitializeComponent();
+        }
+
+        private void BtnBack_Click(object sender, RoutedEventArgs e)
+        {
+            ((MainWindow)Application.Current.MainWindow).ShowPage(new UCMenu());
         }
     }
 }

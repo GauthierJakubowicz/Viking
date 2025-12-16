@@ -1,14 +1,10 @@
-﻿<Window x:Name="Menu" x:Class="Viking.MainWindow"
+﻿<Window x:Class="VikingGame.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Viking"
-        mc:Ignorable="d"
-        Title="Menu" Height="800" Width="1600">
-    <Canvas>
-        <Image Source="/img/snow_background.jpg" />
-
-        <Label x:Name="labTitre" Content="Viking" Canvas.Left="700" Canvas.Top="131" HorizontalAlignment="Left" VerticalAlignment="Top" Width="Auto" Height="Auto" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="40"/>
-    </Canvas>
+        xmlns:local="clr-namespace:VikingGame"
+        Title="Viking Game" Height="600" Width="1000">
+    <Grid x:Name="MainGrid">
+        <!-- On démarre par afficher le menu -->
+        <local:UCMenu/>
+    </Grid>
 </Window>
