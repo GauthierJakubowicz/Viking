@@ -1,35 +1,107 @@
 ﻿<UserControl x:Class="Viking.UCJeu"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="1200">
-    <Canvas Background="#87CEEB">
-        <!-- Sol -->
-        <Rectangle Canvas.Bottom="0" Width="1200" Height="100" Fill="#8B4513"/>
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="720" d:DesignWidth="1280">
 
-        <!-- Joueur 1 -->
-        <Image x:Name="imgJoueur1" Width="124" Height="84"/>
+    <Grid Background="#2C3E50">
+        <!-- Canvas pour le jeu -->
+        <Canvas x:Name="GameCanvas" Width="1280" Height="720">
+            <!-- Arrière-plan du jeu -->
+            <Rectangle Width="1280" Height="720" Fill="#34495E"/>
 
-        <!-- Joueur 2 -->
-        <Image x:Name="imgJoueur2" Width="124" Height="84"/>
+            <!-- Joueur 1 -->
+            <Image x:Name="imgJoueur1" 
+                   Width="124" 
+                   Height="84"
+                   Canvas.Left="100" 
+                   Canvas.Top="300"/>
 
-        <!-- Affichage des contrôles -->
-        <StackPanel Canvas.Left="10" Canvas.Top="10" Background="#AA000000" Padding="10">
-            <TextBlock Foreground="White" FontWeight="Bold">JOUEUR 1 (Gauche)</TextBlock>
-            <TextBlock Foreground="White">Q/D: Marcher/Courir</TextBlock>
-            <TextBlock Foreground="White">S: Slide</TextBlock>
-            <TextBlock Foreground="White">Space/A/Z: Attaques</TextBlock>
-            <TextBlock Foreground="White">E: Block</TextBlock>
-        </StackPanel>
+            <!-- Joueur 2 -->
+            <Image x:Name="imgJoueur2" 
+                   Width="124" 
+                   Height="84"
+                   Canvas.Left="1000" 
+                   Canvas.Top="300"/>
 
-        <StackPanel Canvas.Right="10" Canvas.Top="10" Background="#AA000000" Padding="10">
-            <TextBlock Foreground="White" FontWeight="Bold">JOUEUR 2 (Droite)</TextBlock>
-            <TextBlock Foreground="White">←/→: Marcher/Courir</TextBlock>
-            <TextBlock Foreground="White">↓: Slide</TextBlock>
-            <TextBlock Foreground="White">Ctrl/NumPad0/1/2: Attaques</TextBlock>
-            <TextBlock Foreground="White">Shift/NumPad3: Block</TextBlock>
-        </StackPanel>
-    </Canvas>
+            <!-- Sol -->
+            <Rectangle Canvas.Top="520" 
+                      Width="1280" 
+                      Height="200" 
+                      Fill="#273746">
+                <Rectangle.Effect>
+                    <DropShadowEffect Direction="90" 
+                                     ShadowDepth="10" 
+                                     BlurRadius="20" 
+                                     Opacity="0.5"/>
+                </Rectangle.Effect>
+            </Rectangle>
+
+            <!-- Indicateurs de contrôles Joueur 1 -->
+            <Border Canvas.Left="50" Canvas.Top="50" 
+                    Background="#1C2833" 
+                    Padding="15" 
+                    CornerRadius="8" 
+                    BorderBrush="#1ABC9C"
+                    BorderThickness="2"
+                    Opacity="0.9">
+                <StackPanel>
+                    <TextBlock Text="🎮 JOUEUR 1" 
+                              Foreground="#1ABC9C" 
+                              FontSize="16" 
+                              FontWeight="Bold"
+                              Margin="0,0,0,5"/>
+                    <TextBlock Foreground="White" 
+                              FontSize="12">
+                        <Run Text="Q/D: Bouger"/>
+                        <LineBreak/>
+                        <Run Text="ESPACE/A/Z: Attaquer"/>
+                        <LineBreak/>
+                        <Run Text="E: Bloquer" Foreground="#F39C12"/>
+                    </TextBlock>
+                </StackPanel>
+            </Border>
+
+            <!-- Indicateurs de contrôles Joueur 2 -->
+            <Border Canvas.Left="1030" Canvas.Top="50" 
+                    Background="#1C2833" 
+                    Padding="15" 
+                    CornerRadius="8" 
+                    BorderBrush="#3498DB"
+                    BorderThickness="2"
+                    Opacity="0.9">
+                <StackPanel>
+                    <TextBlock Text="🎮 JOUEUR 2" 
+                              Foreground="#3498DB" 
+                              FontSize="16" 
+                              FontWeight="Bold"
+                              Margin="0,0,0,5"/>
+                    <TextBlock Foreground="White" 
+                              FontSize="12">
+                        <Run Text="←/→: Bouger"/>
+                        <LineBreak/>
+                        <Run Text="NUM 0/1/2: Attaquer"/>
+                        <LineBreak/>
+                        <Run Text="NUM 3: Bloquer" Foreground="#F39C12"/>
+                    </TextBlock>
+                </StackPanel>
+            </Border>
+
+            <!-- Message central -->
+            <Border Canvas.Left="440" Canvas.Top="650" 
+                    Background="#1C2833" 
+                    Padding="20,10" 
+                    CornerRadius="8" 
+                    BorderBrush="#F39C12"
+                    BorderThickness="2"
+                    Opacity="0.9">
+                <TextBlock Text="⚔️ PREMIER QUI TOUCHE GAGNE ! ⚔️" 
+                          Foreground="#F39C12" 
+                          FontSize="18" 
+                          FontWeight="Bold"/>
+            </Border>
+        </Canvas>
+    </Grid>
 </UserControl>

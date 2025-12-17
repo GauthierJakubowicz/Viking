@@ -102,7 +102,8 @@ namespace VikingGame
             imgTarget.RenderTransformOrigin = new Point(0.5, 0.5);
         }
 
-        private void Animate(object sender, EventArgs e)
+        // CORRECTION ICI - Ajout du ? après object
+        private void Animate(object? sender, EventArgs e)
         {
             if (!animations.TryGetValue(currentAnimation, out var frames) || frames.Length == 0)
                 return;
