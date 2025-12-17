@@ -12,15 +12,18 @@ namespace VikingGame
 {
     public class AnimationManager
     {
-        private Dictionary<string, BitmapSource[]> animations = new Dictionary<string, BitmapSource[]>();
-        private DispatcherTimer timer;
+        private readonly Dictionary<string, BitmapSource[]> animations = new Dictionary<string, BitmapSource[]>();
+        private readonly DispatcherTimer timer;
         private int currentFrame = 0;
         private string currentAnimation = "Idle";
-        private Image imgTarget;
+        private readonly Image imgTarget;
 
         public AnimationManager(Image targetImage, int frameWidth, int frameHeight, BitmapImage spriteSheet, Dictionary<string, (int row, int frameCount)> animationMap)
         {
-            imgTarget = targetImage;
+            imgTarget = targetImage ?? throw new ArgumentNullException(nameof(targetImage));
+
+            if (spriteSheet == null || spriteSheet.PixelWidth == 0 || spriteSheet.PixelHeight == 0)
+                throw new Exception("SpriteSheet non chargée ou invalide !");
 
             foreach (var anim in animationMap)
             {
@@ -31,13 +34,20 @@ namespace VikingGame
                 BitmapSource[] frames = new BitmapSource[count];
                 for (int i = 0; i < count; i++)
                 {
-                    frames[i] = new CroppedBitmap(spriteSheet, new Int32Rect(i * frameWidth, row * frameHeight, frameWidth, frameHeight));
+                    // Vérification que la découpe reste dans les limites de la spritesheet
+                    if ((i + 1) * frameWidth <= spriteSheet.PixelWidth &&
+                        (row + 1) * frameHeight <= spriteSheet.PixelHeight)
+                    {
+                        frames[i] = new CroppedBitmap(spriteSheet, new Int32Rect(i * frameWidth, row * frameHeight, frameWidth, frameHeight));
+                    }
                 }
                 animations[name] = frames;
             }
 
-            timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(100);
+            timer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromMilliseconds(120) // vitesse ajustée pour éviter scintillement
+            };
             timer.Tick += Animate;
             timer.Start();
         }
@@ -46,12 +56,19 @@ namespace VikingGame
         {
             if (!animations.ContainsKey(currentAnimation)) return;
 
-            imgTarget.Source = animations[currentAnimation][currentFrame];
-            currentFrame = (currentFrame + 1) % animations[currentAnimation].Length;
+            var frames = animations[currentAnimation];
+            if (frames == null || frames.Length == 0) return;
+
+            var frame = frames[currentFrame];
+            if (frame != null)
+                imgTarget.Source = frame;
+
+            currentFrame = (currentFrame + 1) % frames.Length;
         }
 
         public void Play(string animationName)
         {
+            if (string.IsNullOrWhiteSpace(animationName)) return;
             if (animationName == currentAnimation) return;
 
             if (animations.ContainsKey(animationName))

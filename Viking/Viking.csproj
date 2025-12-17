@@ -28,10 +28,10 @@
   <ItemGroup>
     <Content Include="img\logo_valhalla.ico" />
     <Resource Include="img\Viking Portrait.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="img\Viking-Sheet.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
 

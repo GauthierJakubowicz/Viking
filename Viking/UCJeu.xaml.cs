@@ -48,7 +48,7 @@ namespace Viking
             };
 
             // Création du personnage Viking
-            viking = new Personnage("Viking", "Viking Portrait.png", "Viking-Sheet.png", imgViking, 33, 46, vikingAnimationMap);
+            viking = new Personnage("Viking", "Viking Portrait.png", "Viking-Sheet.png", imgViking, 34, 46, vikingAnimationMap);
 
 
             // Brancher les touches clavier

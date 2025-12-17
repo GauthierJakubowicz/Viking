@@ -15,11 +15,11 @@ namespace Viking
 
         public Personnage(
             string nom,
-            string portraitFile,       // ex: "Viking Portrait.png"
-            string spriteFile,         // ex: "Viking-Sheet.png"
-            Image targetImage,         // ex: imgViking dans UCJeu.xaml
-            int frameWidth,            // largeur d’une frame = 33
-            int frameHeight,           // hauteur d’une frame = 46
+            string portraitFile,
+            string spriteFile,
+            Image targetImage,
+            int frameWidth,
+            int frameHeight,
             Dictionary<string, (int row, int frameCount)> animationMap
         )
         {
@@ -28,11 +28,11 @@ namespace Viking
             // Charger le portrait (optionnel mais utile pour UCMenu plus tard)
             if (!string.IsNullOrWhiteSpace(portraitFile))
             {
-                Portrait = new BitmapImage(new Uri($"/img/{portraitFile}", UriKind.Relative));
+                Portrait = new BitmapImage(new Uri($"pack://application:,,,/img/{portraitFile}"));
             }
 
             // Charger la spritesheet
-            SpriteSheet = new BitmapImage(new Uri($"/img/{spriteFile}", UriKind.Relative));
+            SpriteSheet = new BitmapImage(new Uri($"pack://application:,,,/img/{spriteFile}"));
 
             // Créer le gestionnaire d’animations
             AnimManager = new AnimationManager(targetImage, frameWidth, frameHeight, SpriteSheet, animationMap);
