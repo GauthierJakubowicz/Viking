@@ -54,8 +54,6 @@ namespace Viking
 
             // Empêcher le zoom de l’image
             imgViking.Stretch = Stretch.None;
-            imgViking.Width = double.NaN;
-            imgViking.Height = double.NaN;
             imgViking.SnapsToDevicePixels = true;
             imgViking.UseLayoutRounding = true;
             RenderOptions.SetBitmapScalingMode(imgViking, BitmapScalingMode.NearestNeighbor);
@@ -66,30 +64,38 @@ namespace Viking
             {
                 parentWindow.KeyDown += ParentWindow_KeyDown;
             }
+            SpriteOffset.X = 0;
+            SpriteOffset.Y = 0;
+
         }
 
         private void ParentWindow_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Right)
             {
+                SpriteOffset.X = 0;
                 viking.JouerAnimation("Run");
                 Canvas.SetLeft(imgViking, Canvas.GetLeft(imgViking) + 5);
             }
             else if (e.Key == Key.Left)
             {
+                SpriteOffset.X = 0;
                 viking.JouerAnimation("Walk");
                 Canvas.SetLeft(imgViking, Canvas.GetLeft(imgViking) - 5);
             }
             else if (e.Key == Key.Space)
             {
+                SpriteOffset.X = -20;
                 viking.JouerAnimation("Attack1");
             }
             else if (e.Key == Key.D)
             {
+                SpriteOffset.X = 0;
                 viking.JouerAnimation("Death");
             }
             else if (e.Key == Key.I)
             {
+                SpriteOffset.X = 0;
                 viking.JouerAnimation("Idle");
             }
         }
