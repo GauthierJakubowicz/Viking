@@ -27,6 +27,8 @@
 
   <ItemGroup>
     <Content Include="img\logo_valhalla.ico" />
+    <Content Include="img\Viking Portrait.png" />
+    <Content Include="img\Viking-Sheet.png" />
   </ItemGroup>
 
   <ItemGroup>
