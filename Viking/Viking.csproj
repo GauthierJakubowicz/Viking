@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <None Remove="background_glacial_mountains.png" />
+    <None Remove="Sons\musique_de_fond.mp3" />
     <None Remove="Viking Portrait.png" />
     <None Remove="Viking%28Ice Axe%29-Sheet.png" />
     <None Remove="Viking%28Ice Axe%29NoEffect-Sheet.png" />
@@ -27,6 +28,9 @@
 
   <ItemGroup>
     <Content Include="img\logo_valhalla.ico" />
+    <Content Include="Sons\musique_de_fond.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Resource Include="img\Viking Portrait.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
