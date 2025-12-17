@@ -14,10 +14,26 @@ namespace VikingGame
 {
     public partial class MainWindow : Window
     {
+        private static MediaPlayer musique;
         public MainWindow()
         {
             InitializeComponent();
+            InitMusique();
         }
+        private void InitMusique()
+        {
+            musique = new MediaPlayer();
+            musique.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "mp3/Echoes_of_Valhalla.mp3"));
+            musique.MediaEnded += RelanceMusique;
+            musique.Volume = 0.5;
+            musique.Play();
+        }
+        private void RelanceMusique(object? sender, EventArgs e)
+        {
+            musique.Position = TimeSpan.Zero;
+            musique.Play();
+        }
+
 
         // Méthode pour changer de page
         public void ShowPage(UserControl page)
