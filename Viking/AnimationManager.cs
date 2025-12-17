@@ -16,6 +16,8 @@ namespace VikingGame
         private string currentAnimation = "Idle";
         private readonly Image imgTarget;
         private bool facingRight = true;
+        private readonly int frameWidth;
+        private readonly int frameHeight;
 
         public bool FacingRight
         {
@@ -38,6 +40,12 @@ namespace VikingGame
             imgTarget = targetImage ?? throw new ArgumentNullException(nameof(targetImage));
             if (spriteSheet == null) throw new ArgumentNullException(nameof(spriteSheet));
 
+            // Stocker les dimensions des frames
+            var firstAnim = animationMap.GetEnumerator();
+            firstAnim.MoveNext();
+            frameWidth = firstAnim.Current.Value.frameWidth;
+            frameHeight = firstAnim.Current.Value.frameHeight;
+
             foreach (var anim in animationMap)
             {
                 string name = anim.Key;
@@ -50,7 +58,6 @@ namespace VikingGame
 
                 for (int i = 0; i < count; i++)
                 {
-                    // Frame normale
                     var frameCrop = new CroppedBitmap(
                         spriteSheet,
                         new Int32Rect(i * frameW, row * frameH, frameW, frameH)
@@ -68,6 +75,8 @@ namespace VikingGame
             }
 
             // Configuration de l'image cible
+            imgTarget.Width = frameWidth;
+            imgTarget.Height = frameHeight;
             imgTarget.Stretch = Stretch.None;
             imgTarget.SnapsToDevicePixels = true;
             imgTarget.UseLayoutRounding = true;
@@ -86,9 +95,7 @@ namespace VikingGame
             // Créer une transformation qui retourne l'image si nécessaire
             var scaleTransform = new ScaleTransform(
                 facingRight ? 1 : -1,  // ScaleX: 1 = normal, -1 = retourné
-                1,                       // ScaleY: toujours 1
-                imgTarget.Width / 2,     // Centre X de la transformation
-                imgTarget.Height / 2     // Centre Y de la transformation
+                1                       // ScaleY: toujours 1
             );
 
             imgTarget.RenderTransform = scaleTransform;

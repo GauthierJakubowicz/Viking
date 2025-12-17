@@ -10,38 +10,32 @@ namespace Viking
 {
     public partial class UCJeu : UserControl
     {
-        private Personnage personnageActuel;
-        private string typePersonnage;
+        private Personnage joueur1;
+        private Personnage joueur2;
         private double vitesseMarche = 3;
         private double vitesseCourse = 6;
 
-        // Constructeur par défaut (Viking)
-        public UCJeu() : this("Viking")
-        {
-        }
-
-        // Constructeur avec choix du personnage
-        public UCJeu(string typePersonnage)
+        // Constructeur qui reçoit les deux personnages choisis
+        public UCJeu(string typeJoueur1, string typeJoueur2)
         {
             InitializeComponent();
-            this.typePersonnage = typePersonnage;
-            Loaded += UCJeu_Loaded;
+            Loaded += (s, e) => UCJeu_Loaded(typeJoueur1, typeJoueur2);
         }
 
-        private void UCJeu_Loaded(object sender, RoutedEventArgs e)
+        private void UCJeu_Loaded(string typeJoueur1, string typeJoueur2)
         {
-            // Créer le personnage en fonction du type choisi
-            CreerPersonnage(typePersonnage);
+            // Créer le joueur 1 (à gauche)
+            joueur1 = CreerPersonnage(typeJoueur1, imgJoueur1);
+            Canvas.SetLeft(imgJoueur1, 100);
+            Canvas.SetTop(imgJoueur1, 300);
+            ConfigurerImage(imgJoueur1);
 
-            // Initialiser la position du personnage
-            Canvas.SetLeft(imgViking, 100);
-            Canvas.SetTop(imgViking, 300);
-
-            // Empêcher le zoom de l'image
-            imgViking.Stretch = Stretch.None;
-            imgViking.SnapsToDevicePixels = true;
-            imgViking.UseLayoutRounding = true;
-            RenderOptions.SetBitmapScalingMode(imgViking, BitmapScalingMode.NearestNeighbor);
+            // Créer le joueur 2 (à droite)
+            joueur2 = CreerPersonnage(typeJoueur2, imgJoueur2);
+            Canvas.SetLeft(imgJoueur2, 1000);
+            Canvas.SetTop(imgJoueur2, 300);
+            joueur2.FacingRight = false;
+            ConfigurerImage(imgJoueur2);
 
             // Brancher les touches clavier
             Window parentWindow = Window.GetWindow(this);
@@ -51,117 +45,157 @@ namespace Viking
             }
         }
 
-        private void CreerPersonnage(string type)
+        private void ConfigurerImage(Image img)
+        {
+            img.Stretch = Stretch.None;
+            img.SnapsToDevicePixels = true;
+            img.UseLayoutRounding = true;
+            RenderOptions.SetBitmapScalingMode(img, BitmapScalingMode.NearestNeighbor);
+        }
+
+        private Personnage CreerPersonnage(string type, Image targetImage)
         {
             switch (type)
             {
                 case "Viking":
-                    personnageActuel = Personnage.CreerViking(imgViking);
-                    break;
+                    return Personnage.CreerViking(targetImage);
                 case "Spearwoman":
-                    personnageActuel = Personnage.CreerSpearwoman(imgViking);
-                    break;
+                    return Personnage.CreerSpearwoman(targetImage);
                 case "FireWarrior":
-                    personnageActuel = Personnage.CreerFireWarrior(imgViking);
-                    break;
+                    return Personnage.CreerFireWarrior(targetImage);
                 default:
-                    personnageActuel = Personnage.CreerViking(imgViking);
-                    break;
+                    return Personnage.CreerViking(targetImage);
             }
         }
 
-        // Méthode pour obtenir une position sûre (évite les NaN)
-        private double GetSafeLeft()
+        private double GetSafeLeft(Image img)
         {
-            double left = Canvas.GetLeft(imgViking);
+            double left = Canvas.GetLeft(img);
             return double.IsNaN(left) ? 100 : left;
         }
 
         private void ParentWindow_KeyDown(object sender, KeyEventArgs e)
         {
-            string animation = "";
-            double deplacement = 0;
+            // ==================== JOUEUR 1 ====================
+            string animJ1 = "";
+            double deplacementJ1 = 0;
 
-            // DÉPLACEMENT - Animations communes à tous
-            if (e.Key == Key.Right)
+            if (e.Key == Key.D)
             {
-                personnageActuel.FacingRight = true;
-                animation = "Run";
-                deplacement = vitesseCourse;
+                joueur1.FacingRight = true;
+                animJ1 = "Run";
+                deplacementJ1 = vitesseCourse;
             }
-            else if (e.Key == Key.Left)
+            else if (e.Key == Key.Q)
             {
-                personnageActuel.FacingRight = false;
-                animation = "Walk";
-                deplacement = -vitesseMarche;
+                joueur1.FacingRight = false;
+                animJ1 = "Walk";
+                deplacementJ1 = -vitesseMarche;
             }
-            else if (e.Key == Key.Down || e.Key == Key.S)
+            else if (e.Key == Key.S)
             {
-                animation = "Slide";
+                animJ1 = "Slide";
             }
-            // COMBAT - Animations communes à tous
             else if (e.Key == Key.Space)
             {
-                animation = "Attack1";
+                animJ1 = "Attack1";
             }
             else if (e.Key == Key.A)
             {
-                animation = "Attack2";
+                animJ1 = "Attack2";
             }
-            else if (e.Key == Key.Z) // AZERTY
+            else if (e.Key == Key.Z)
             {
-                animation = "Attack3";
+                animJ1 = "Attack3";
             }
             else if (e.Key == Key.E)
             {
-                animation = "Block";
+                animJ1 = "Block";
             }
-            // ANIMATIONS DE TEST - Communes à tous
-            else if (e.Key == Key.I)
+            else if (e.Key == Key.R)
             {
-                animation = "Idle";
+                animJ1 = "Hit";
             }
-            else if (e.Key == Key.H)
+            else if (e.Key == Key.F)
             {
-                animation = "Hit";
+                animJ1 = "Death";
             }
-            else if (e.Key == Key.D)
+            else if (e.Key == Key.T)
             {
-                animation = "Death";
-            }
-            // CHANGEMENT DE PERSONNAGE
-            else if (e.Key == Key.D1 || e.Key == Key.NumPad1)
-            {
-                typePersonnage = "Viking";
-                CreerPersonnage(typePersonnage);
-                return;
-            }
-            else if (e.Key == Key.D2 || e.Key == Key.NumPad2)
-            {
-                typePersonnage = "Spearwoman";
-                CreerPersonnage(typePersonnage);
-                return;
-            }
-            else if (e.Key == Key.D3 || e.Key == Key.NumPad3)
-            {
-                typePersonnage = "FireWarrior";
-                CreerPersonnage(typePersonnage);
-                return;
+                animJ1 = "Idle";
             }
 
-            // Appliquer l'animation si une action a été détectée
-            if (!string.IsNullOrEmpty(animation))
+            if (!string.IsNullOrEmpty(animJ1))
             {
-                personnageActuel.JouerAnimation(animation);
+                joueur1.JouerAnimation(animJ1);
             }
 
-            // Appliquer le déplacement si nécessaire
-            if (deplacement != 0)
+            if (deplacementJ1 != 0)
             {
-                double nouvellePosition = GetSafeLeft() + deplacement;
-                // Limiter aux bords du canvas
+                double nouvellePosition = GetSafeLeft(imgJoueur1) + deplacementJ1;
                 nouvellePosition = Math.Max(0, Math.Min(nouvellePosition, 1200));
-                Canvas.SetLeft(imgViking, nouvellePosition);
+                Canvas.SetLeft(imgJoueur1, nouvellePosition);
+            }
+
+            // ==================== JOUEUR 2 ====================
+            string animJ2 = "";
+            double deplacementJ2 = 0;
+
+            if (e.Key == Key.Right)
+            {
+                joueur2.FacingRight = true;
+                animJ2 = "Run";
+                deplacementJ2 = vitesseCourse;
+            }
+            else if (e.Key == Key.Left)
+            {
+                joueur2.FacingRight = false;
+                animJ2 = "Walk";
+                deplacementJ2 = -vitesseMarche;
+            }
+            else if (e.Key == Key.Down)
+            {
+                animJ2 = "Slide";
+            }
+            else if (e.Key == Key.NumPad0 || e.Key == Key.RightCtrl)
+            {
+                animJ2 = "Attack1";
+            }
+            else if (e.Key == Key.NumPad1)
+            {
+                animJ2 = "Attack2";
+            }
+            else if (e.Key == Key.NumPad2)
+            {
+                animJ2 = "Attack3";
+            }
+            else if (e.Key == Key.NumPad3 || e.Key == Key.RightShift)
+            {
+                animJ2 = "Block";
+            }
+            else if (e.Key == Key.NumPad4)
+            {
+                animJ2 = "Hit";
+            }
+            else if (e.Key == Key.NumPad5)
+            {
+                animJ2 = "Death";
+            }
+            else if (e.Key == Key.NumPad6)
+            {
+                animJ2 = "Idle";
+            }
+
+            if (!string.IsNullOrEmpty(animJ2))
+            {
+                joueur2.JouerAnimation(animJ2);
+            }
+
+            if (deplacementJ2 != 0)
+            {
+                double nouvellePosition = GetSafeLeft(imgJoueur2) + deplacementJ2;
+                nouvellePosition = Math.Max(0, Math.Min(nouvellePosition, 1200));
+                Canvas.SetLeft(imgJoueur2, nouvellePosition);
             }
         }
     }

@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace VikingGame
+namespace Viking
 {
     public partial class UCReglesJeu : UserControl
     {
@@ -22,9 +22,10 @@ namespace VikingGame
             InitializeComponent();
         }
 
-        private void BtnBack_Click(object sender, RoutedEventArgs e)
+        private void BtnRetour_Click(object sender, RoutedEventArgs e)
         {
-            ((MainWindow)Application.Current.MainWindow).ShowPage(new UCMenu());
+            // Retourner au menu principal
+            ((VikingGame.MainWindow)Application.Current.MainWindow).ShowPage(new VikingGame.UCMenu());
         }
     }
 }
