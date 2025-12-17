@@ -3,15 +3,103 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Viking"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="White">
-        <Image Source="/img/background_glacial_mountains.png" />
-        <Image Margin="169,225,568,161" Source="/img/Viking Portrait.png" Stretch="Fill"/>
-        <Image Margin="368,225,368,161" Source="/img/Fire_Warrior_Portrait.png" Stretch="Fill"/>
-        <Image Margin="537,225,198,161" Source="/img/Spearwoman_Portrait.png" Stretch="Fill"/>
-        <Label Content="Personnages :" HorizontalAlignment="Center" Margin="0,47,0,0" VerticalAlignment="Top" Width="301" Height="86" FontSize="48"/>
+             d:DesignHeight="600" d:DesignWidth="800">
+    <Grid Background="#2C3E50">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
 
+        <!-- Titre -->
+        <TextBlock Grid.Row="0" 
+                   Text="CHOISISSEZ VOTRE PERSONNAGE"
+                   FontSize="36"
+                   FontWeight="Bold"
+                   Foreground="#ECF0F1"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+
+        <!-- Personnages -->
+        <StackPanel Grid.Row="1" 
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center">
+
+            <!-- Viking -->
+            <Border Background="#34495E" 
+                    Margin="20" 
+                    Padding="20" 
+                    CornerRadius="10"
+                    Cursor="Hand">
+                <StackPanel>
+                    <Image x:Name="imgViking"
+                           Source="pack://application:,,,/Viking;component/img/Viking_portrait.png"
+                           Width="150" 
+                           Height="150"
+                           MouseDown="ImgViking_MouseDown"
+                           Stretch="Uniform"/>
+                    <TextBlock Text="VIKING"
+                               FontSize="24"
+                               FontWeight="Bold"
+                               Foreground="#E74C3C"
+                               HorizontalAlignment="Center"
+                               Margin="0,10,0,0"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Spearwoman -->
+            <Border Background="#34495E" 
+                    Margin="20" 
+                    Padding="20" 
+                    CornerRadius="10"
+                    Cursor="Hand">
+                <StackPanel>
+                    <Image x:Name="imgSpearwoman"
+                           Source="pack://application:,,,/Viking;component/img/Spearwoman_portrait.png"
+                           Width="150" 
+                           Height="150"
+                           MouseDown="ImgSpearwoman_MouseDown"
+                           Stretch="Uniform"/>
+                    <TextBlock Text="SPEARWOMAN"
+                               FontSize="24"
+                               FontWeight="Bold"
+                               Foreground="#3498DB"
+                               HorizontalAlignment="Center"
+                               Margin="0,10,0,0"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Fire Warrior -->
+            <Border Background="#34495E" 
+                    Margin="20" 
+                    Padding="20" 
+                    CornerRadius="10"
+                    Cursor="Hand">
+                <StackPanel>
+                    <Image x:Name="imgFireWarrior"
+                           Source="pack://application:,,,/Viking;component/img/Fire_warrior_portrait.png"
+                           Width="150" 
+                           Height="150"
+                           MouseDown="ImgFireWarrior_MouseDown"
+                           Stretch="Uniform"/>
+                    <TextBlock Text="FIRE WARRIOR"
+                               FontSize="24"
+                               FontWeight="Bold"
+                               Foreground="#E67E22"
+                               HorizontalAlignment="Center"
+                               Margin="0,10,0,0"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+
+        <!-- Instructions -->
+        <TextBlock Grid.Row="2"
+                   Text="Cliquez sur un personnage pour commencer"
+                   FontSize="18"
+                   Foreground="#95A5A6"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
     </Grid>
 </UserControl>

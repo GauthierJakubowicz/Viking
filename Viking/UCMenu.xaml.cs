@@ -25,7 +25,8 @@ namespace VikingGame
 
         private void BtnPlay_Click(object sender, RoutedEventArgs e)
         {
-            ((MainWindow)Application.Current.MainWindow).ShowPage(new UCJeu());
+            // Naviguer vers l'écran de choix de personnage
+            ((MainWindow)Application.Current.MainWindow).ShowPage(new UCChoixPerso());
         }
 
         private void BtnRules_Click(object sender, RoutedEventArgs e)
