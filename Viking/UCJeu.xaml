@@ -26,82 +26,51 @@
                    Canvas.Left="1000" 
                    Canvas.Top="300"/>
 
+            <!-- Barre de santé Joueur 1 -->
+            <Border Canvas.Left="50" Canvas.Top="30" 
+                    Width="300" Height="40" 
+                    Background="#34495E" 
+                    BorderBrush="#1ABC9C" 
+                    BorderThickness="2" 
+                    CornerRadius="5">
+                <Grid Margin="5">
+                    <Rectangle x:Name="HealthBarJ1" 
+                              Fill="#1ABC9C" 
+                              HorizontalAlignment="Left"/>
+                    <TextBlock Text="JOUEUR 1" 
+                              FontSize="16" 
+                              FontWeight="Bold" 
+                              Foreground="White" 
+                              HorizontalAlignment="Center" 
+                              VerticalAlignment="Center"/>
+                </Grid>
+            </Border>
+
+            <!-- Barre de santé Joueur 2 -->
+            <Border Canvas.Left="930" Canvas.Top="30" 
+                    Width="300" Height="40" 
+                    Background="#34495E" 
+                    BorderBrush="#3498DB" 
+                    BorderThickness="2" 
+                    CornerRadius="5">
+                <Grid Margin="5">
+                    <Rectangle x:Name="HealthBarJ2" 
+                              Fill="#3498DB" 
+                              HorizontalAlignment="Left"/>
+                    <TextBlock Text="JOUEUR 2" 
+                              FontSize="16" 
+                              FontWeight="Bold" 
+                              Foreground="White" 
+                              HorizontalAlignment="Center" 
+                              VerticalAlignment="Center"/>
+                </Grid>
+            </Border>
+
             <!-- Sol -->
-            <Rectangle Canvas.Top="520" 
+            <Rectangle Canvas.Top="600" 
                       Width="1280" 
-                      Height="200" 
-                      Fill="#273746">
-                <Rectangle.Effect>
-                    <DropShadowEffect Direction="90" 
-                                     ShadowDepth="10" 
-                                     BlurRadius="20" 
-                                     Opacity="0.5"/>
-                </Rectangle.Effect>
-            </Rectangle>
-
-            <!-- Indicateurs de contrôles Joueur 1 -->
-            <Border Canvas.Left="50" Canvas.Top="50" 
-                    Background="#1C2833" 
-                    Padding="15" 
-                    CornerRadius="8" 
-                    BorderBrush="#1ABC9C"
-                    BorderThickness="2"
-                    Opacity="0.9">
-                <StackPanel>
-                    <TextBlock Text="🎮 JOUEUR 1" 
-                              Foreground="#1ABC9C" 
-                              FontSize="16" 
-                              FontWeight="Bold"
-                              Margin="0,0,0,5"/>
-                    <TextBlock Foreground="White" 
-                              FontSize="12">
-                        <Run Text="Q/D: Bouger"/>
-                        <LineBreak/>
-                        <Run Text="ESPACE/A/Z: Attaquer"/>
-                        <LineBreak/>
-                        <Run Text="E: Bloquer" Foreground="#F39C12"/>
-                    </TextBlock>
-                </StackPanel>
-            </Border>
-
-            <!-- Indicateurs de contrôles Joueur 2 -->
-            <Border Canvas.Left="1030" Canvas.Top="50" 
-                    Background="#1C2833" 
-                    Padding="15" 
-                    CornerRadius="8" 
-                    BorderBrush="#3498DB"
-                    BorderThickness="2"
-                    Opacity="0.9">
-                <StackPanel>
-                    <TextBlock Text="🎮 JOUEUR 2" 
-                              Foreground="#3498DB" 
-                              FontSize="16" 
-                              FontWeight="Bold"
-                              Margin="0,0,0,5"/>
-                    <TextBlock Foreground="White" 
-                              FontSize="12">
-                        <Run Text="←/→: Bouger"/>
-                        <LineBreak/>
-                        <Run Text="NUM 0/1/2: Attaquer"/>
-                        <LineBreak/>
-                        <Run Text="NUM 3: Bloquer" Foreground="#F39C12"/>
-                    </TextBlock>
-                </StackPanel>
-            </Border>
-
-            <!-- Message central -->
-            <Border Canvas.Left="440" Canvas.Top="650" 
-                    Background="#1C2833" 
-                    Padding="20,10" 
-                    CornerRadius="8" 
-                    BorderBrush="#F39C12"
-                    BorderThickness="2"
-                    Opacity="0.9">
-                <TextBlock Text="⚔️ PREMIER QUI TOUCHE GAGNE ! ⚔️" 
-                          Foreground="#F39C12" 
-                          FontSize="18" 
-                          FontWeight="Bold"/>
-            </Border>
+                      Height="120" 
+                      Fill="#2C3E50"/>
         </Canvas>
     </Grid>
 </UserControl>
