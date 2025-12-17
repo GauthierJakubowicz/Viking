@@ -27,8 +27,12 @@
 
   <ItemGroup>
     <Content Include="img\logo_valhalla.ico" />
-    <Content Include="img\Viking Portrait.png" />
-    <Content Include="img\Viking-Sheet.png" />
+    <Resource Include="img\Viking Portrait.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="img\Viking-Sheet.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
