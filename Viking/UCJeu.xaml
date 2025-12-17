@@ -2,6 +2,6 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Canvas Background="LightBlue" x:Name="GameCanvas">
-        <Image x:Name="imgViking" Width="34" Height="46" Canvas.Left="200" Canvas.Top="300"/>
+        <Image x:Name="imgViking" Width="248" Height="168" Canvas.Left="300" Canvas.Top="300"/>
     </Canvas>
 </UserControl>
