@@ -30,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="background_glacial_mountains.png" />
+    <Resource Include="img\background_glacial_mountains.png" />
   </ItemGroup>
 
 </Project>
