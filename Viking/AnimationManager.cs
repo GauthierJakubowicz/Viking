@@ -10,13 +10,12 @@ namespace VikingGame
 {
     public class AnimationManager
     {
-        private readonly Dictionary<string, BitmapSource[]> animations = new Dictionary<string, BitmapSource[]>();
+        private readonly Dictionary<string, BitmapSource[]> animations = new();
         private readonly DispatcherTimer timer;
         private int currentFrame = 0;
         private string currentAnimation = "Idle";
         private readonly Image imgTarget;
 
-        // Taille de cellule de la spritesheet (12 colonnes × 24 lignes)
         private const int CellWidth = 124;
         private const int CellHeight = 84;
 
@@ -26,8 +25,7 @@ namespace VikingGame
             Dictionary<string, (int row, int frameCount, int frameWidth, int frameHeight)> animationMap)
         {
             imgTarget = targetImage ?? throw new ArgumentNullException(nameof(targetImage));
-            if (spriteSheet == null || spriteSheet.PixelWidth == 0 || spriteSheet.PixelHeight == 0)
-                throw new Exception("SpriteSheet non chargée ou invalide !");
+            if (spriteSheet == null) throw new ArgumentNullException(nameof(spriteSheet));
 
             foreach (var anim in animationMap)
             {
@@ -38,33 +36,54 @@ namespace VikingGame
                 int frameH = anim.Value.frameHeight;
 
                 var frames = new BitmapSource[count];
+
+                // --- Étape 1 : calcul des bornes globales ---
+                int globalLeft = frameW, globalRight = 0, globalTop = frameH, globalBottom = 0;
+
                 for (int i = 0; i < count; i++)
                 {
-                    // Découpe la cellule complète
-                    var cellCrop = new CroppedBitmap(
-                        spriteSheet,
-                        new Int32Rect(i * CellWidth, row * CellHeight, CellWidth, CellHeight)
-                    );
+                    var frameCrop = new CroppedBitmap(spriteSheet, new Int32Rect(i * frameW, row * frameH, frameW, frameH));
+                    var pixels = new byte[frameW * frameH * 4];
+                    frameCrop.CopyPixels(pixels, frameW * 4, 0);
 
-                    // Crée un visuel fixe 124x84
+                    int left = frameW, right = 0, top = frameH, bottom = 0;
+
+                    for (int y = 0; y < frameH; y++)
+                    {
+                        for (int x = 0; x < frameW; x++)
+                        {
+                            byte alpha = pixels[(y * frameW + x) * 4 + 3];
+                            if (alpha != 0)
+                            {
+                                if (x < left) left = x;
+                                if (x > right) right = x;
+                                if (y < top) top = y;
+                                if (y > bottom) bottom = y;
+                            }
+                        }
+                    }
+
+                    if (left < globalLeft) globalLeft = left;
+                    if (right > globalRight) globalRight = right;
+                    if (top < globalTop) globalTop = top;
+                    if (bottom > globalBottom) globalBottom = bottom;
+                }
+
+                int spriteW = globalRight - globalLeft + 1;
+                int spriteH = globalBottom - globalTop + 1;
+                int offsetX = (CellWidth - spriteW) / 2 - globalLeft;
+                int offsetY = (CellHeight - spriteH) / 2 - globalTop;
+
+                // --- Étape 2 : création des frames centrées avec offsets globaux ---
+                for (int i = 0; i < count; i++)
+                {
+                    var frameCrop = new CroppedBitmap(spriteSheet, new Int32Rect(i * frameW, row * frameH, frameW, frameH));
+
                     var dv = new DrawingVisual();
                     using (var dc = dv.RenderOpen())
                     {
-                        // Fond transparent
                         dc.DrawRectangle(Brushes.Transparent, null, new Rect(0, 0, CellWidth, CellHeight));
-
-                        // Découpe utile (frameW × frameH) depuis le coin haut-gauche de la cellule
-                        var usefulCrop = new CroppedBitmap(
-                            cellCrop,
-                            new Int32Rect(0, 0, Math.Min(frameW, CellWidth), Math.Min(frameH, CellHeight))
-                        );
-
-                        // Calcul du centrage
-                        double offsetX = (CellWidth - usefulCrop.PixelWidth) / 2.0;
-                        double offsetY = (CellHeight - usefulCrop.PixelHeight) / 2.0;
-
-                        // Dessine la frame centrée
-                        dc.DrawImage(usefulCrop, new Rect(offsetX, offsetY, usefulCrop.PixelWidth, usefulCrop.PixelHeight));
+                        dc.DrawImage(frameCrop, new Rect(offsetX, offsetY, frameW, frameH));
                     }
 
                     var bmp = new RenderTargetBitmap(CellWidth, CellHeight, 96, 96, PixelFormats.Pbgra32);
@@ -83,6 +102,7 @@ namespace VikingGame
         private void Animate(object sender, EventArgs e)
         {
             if (!animations.TryGetValue(currentAnimation, out var frames) || frames.Length == 0) return;
+
             imgTarget.Source = frames[currentFrame];
             currentFrame = (currentFrame + 1) % frames.Length;
         }
