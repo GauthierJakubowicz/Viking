@@ -23,7 +23,7 @@ namespace VikingGame
         private void InitMusique()
         {
             musique = new MediaPlayer();
-            musique.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "P:\\R1_01_InitiationDev_C#\\Valhalla\\Viking\\Viking\\Sons\\musique_de_fond.mp3"));
+            musique.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Sons/musique_de_fond.mp3"));
             musique.MediaEnded += RelanceMusique;
             musique.Volume = 0.5;
             musique.Play();
