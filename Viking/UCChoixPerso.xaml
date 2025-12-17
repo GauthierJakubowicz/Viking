@@ -38,8 +38,8 @@
                            Source="pack://application:,,,/Viking;component/img/Viking_portrait.png"
                            Width="150" 
                            Height="150"
-                           MouseDown="ImgViking_MouseDown"
-                           Stretch="Uniform"/>
+                           Stretch="Uniform"
+                           MouseLeftButtonDown="ImgViking_MouseDown"/>
                     <TextBlock Text="VIKING"
                                FontSize="24"
                                FontWeight="Bold"
@@ -60,8 +60,8 @@
                            Source="pack://application:,,,/Viking;component/img/Spearwoman_portrait.png"
                            Width="150" 
                            Height="150"
-                           MouseDown="ImgSpearwoman_MouseDown"
-                           Stretch="Uniform"/>
+                           Stretch="Uniform"
+                           MouseDown="ImgSpearwoman_MouseDown"/>
                     <TextBlock Text="SPEARWOMAN"
                                FontSize="24"
                                FontWeight="Bold"
@@ -82,8 +82,8 @@
                            Source="pack://application:,,,/Viking;component/img/Fire_warrior_portrait.png"
                            Width="150" 
                            Height="150"
-                           MouseDown="ImgFireWarrior_MouseDown"
-                           Stretch="Uniform"/>
+                           Stretch="Uniform"
+                           MouseDown="ImgFireWarrior_MouseDown"/>
                     <TextBlock Text="FIRE WARRIOR"
                                FontSize="24"
                                FontWeight="Bold"

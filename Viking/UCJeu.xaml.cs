@@ -11,22 +11,31 @@ namespace Viking
     public partial class UCJeu : UserControl
     {
         private Personnage personnageActuel;
+        private string typePersonnage;
+        private double vitesseMarche = 3;
+        private double vitesseCourse = 6;
 
-        public UCJeu()
+        // Constructeur par défaut (Viking)
+        public UCJeu() : this("Viking")
+        {
+        }
+
+        // Constructeur avec choix du personnage
+        public UCJeu(string typePersonnage)
         {
             InitializeComponent();
+            this.typePersonnage = typePersonnage;
             Loaded += UCJeu_Loaded;
         }
 
         private void UCJeu_Loaded(object sender, RoutedEventArgs e)
         {
-            // Créer le Viking par défaut
-            // Vous pouvez changer pour créer Spearwoman ou FireWarrior
-            personnageActuel = Personnage.CreerViking(imgViking);
+            // Créer le personnage en fonction du type choisi
+            CreerPersonnage(typePersonnage);
 
-            // Pour changer de personnage, utilisez :
-            // personnageActuel = Personnage.CreerSpearwoman(imgViking);
-            // personnageActuel = Personnage.CreerFireWarrior(imgViking);
+            // Initialiser la position du personnage
+            Canvas.SetLeft(imgViking, 100);
+            Canvas.SetTop(imgViking, 300);
 
             // Empêcher le zoom de l'image
             imgViking.Stretch = Stretch.None;
@@ -42,48 +51,117 @@ namespace Viking
             }
         }
 
+        private void CreerPersonnage(string type)
+        {
+            switch (type)
+            {
+                case "Viking":
+                    personnageActuel = Personnage.CreerViking(imgViking);
+                    break;
+                case "Spearwoman":
+                    personnageActuel = Personnage.CreerSpearwoman(imgViking);
+                    break;
+                case "FireWarrior":
+                    personnageActuel = Personnage.CreerFireWarrior(imgViking);
+                    break;
+                default:
+                    personnageActuel = Personnage.CreerViking(imgViking);
+                    break;
+            }
+        }
+
+        // Méthode pour obtenir une position sûre (évite les NaN)
+        private double GetSafeLeft()
+        {
+            double left = Canvas.GetLeft(imgViking);
+            return double.IsNaN(left) ? 100 : left;
+        }
+
         private void ParentWindow_KeyDown(object sender, KeyEventArgs e)
         {
+            string animation = "";
+            double deplacement = 0;
+
+            // DÉPLACEMENT - Animations communes à tous
             if (e.Key == Key.Right)
             {
                 personnageActuel.FacingRight = true;
-                personnageActuel.JouerAnimation("Run");
-                Canvas.SetLeft(imgViking, Canvas.GetLeft(imgViking) + 5);
+                animation = "Run";
+                deplacement = vitesseCourse;
             }
             else if (e.Key == Key.Left)
             {
                 personnageActuel.FacingRight = false;
-                personnageActuel.JouerAnimation("Walk");
-                Canvas.SetLeft(imgViking, Canvas.GetLeft(imgViking) - 5);
+                animation = "Walk";
+                deplacement = -vitesseMarche;
             }
+            else if (e.Key == Key.Down || e.Key == Key.S)
+            {
+                animation = "Slide";
+            }
+            // COMBAT - Animations communes à tous
             else if (e.Key == Key.Space)
             {
-                personnageActuel.JouerAnimation("Attack1");
+                animation = "Attack1";
+            }
+            else if (e.Key == Key.A)
+            {
+                animation = "Attack2";
+            }
+            else if (e.Key == Key.Z) // AZERTY
+            {
+                animation = "Attack3";
+            }
+            else if (e.Key == Key.E)
+            {
+                animation = "Block";
+            }
+            // ANIMATIONS DE TEST - Communes à tous
+            else if (e.Key == Key.I)
+            {
+                animation = "Idle";
+            }
+            else if (e.Key == Key.H)
+            {
+                animation = "Hit";
             }
             else if (e.Key == Key.D)
             {
-                personnageActuel.JouerAnimation("Death");
+                animation = "Death";
             }
-            else if (e.Key == Key.I)
+            // CHANGEMENT DE PERSONNAGE
+            else if (e.Key == Key.D1 || e.Key == Key.NumPad1)
             {
-                personnageActuel.JouerAnimation("Idle");
+                typePersonnage = "Viking";
+                CreerPersonnage(typePersonnage);
+                return;
             }
-            else if (e.Key == Key.J)
+            else if (e.Key == Key.D2 || e.Key == Key.NumPad2)
             {
-                personnageActuel.JouerAnimation("Jump");
+                typePersonnage = "Spearwoman";
+                CreerPersonnage(typePersonnage);
+                return;
             }
-            // Touches pour changer de personnage
-            else if (e.Key == Key.D1)
+            else if (e.Key == Key.D3 || e.Key == Key.NumPad3)
             {
-                personnageActuel = Personnage.CreerViking(imgViking);
+                typePersonnage = "FireWarrior";
+                CreerPersonnage(typePersonnage);
+                return;
             }
-            else if (e.Key == Key.D2)
+
+            // Appliquer l'animation si une action a été détectée
+            if (!string.IsNullOrEmpty(animation))
             {
-                personnageActuel = Personnage.CreerSpearwoman(imgViking);
+                personnageActuel.JouerAnimation(animation);
             }
-            else if (e.Key == Key.D3)
+
+            // Appliquer le déplacement si nécessaire
+            if (deplacement != 0)
             {
-                personnageActuel = Personnage.CreerFireWarrior(imgViking);
+                double nouvellePosition = GetSafeLeft() + deplacement;
+                // Limiter aux bords du canvas
+                nouvellePosition = Math.Max(0, Math.Min(nouvellePosition, 1200));
+                Canvas.SetLeft(imgViking, nouvellePosition);
             }
         }
     }
