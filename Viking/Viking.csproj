@@ -39,4 +39,25 @@
     <Resource Include="img\background_glacial_mountains.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="mp3\Echoes_of_Valhalla.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="mp3\Frostbound_Horizons.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="mp3\Northern_Lights.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="mp3\Odin%27s_Whisper.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="mp3\Saga_of_the_Sea_Wolves.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="mp3\Throne_of_the_Fjords.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
