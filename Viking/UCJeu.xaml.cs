@@ -10,7 +10,7 @@ namespace Viking
 {
     public partial class UCJeu : UserControl
     {
-        private Personnage viking;
+        private Personnage personnageActuel;
 
         public UCJeu()
         {
@@ -20,39 +20,15 @@ namespace Viking
 
         private void UCJeu_Loaded(object sender, RoutedEventArgs e)
         {
-            // Dictionnaire des animations du Viking (uniforme 124x84)
-            var vikingAnimationMap = new Dictionary<string, (int row, int frameCount, int frameWidth, int frameHeight)>
-            {
-                { "Idle", (0, 8, 124, 84) },
-                { "Walk", (1, 8, 124, 84) },
-                { "Run", (2, 8, 124, 84) },
-                { "Slide", (3, 7, 124, 84) },
-                { "Crouch", (4, 2, 124, 84) },
-                { "CrouchAttack", (5, 5, 124, 84) },
-                { "Jump", (6, 1, 124, 84) },
-                { "JumpToFall", (7, 3, 124, 84) },
-                { "Fall", (8, 1, 124, 84) },
-                { "JumpAttack", (9, 6, 124, 84) },
-                { "IdleBlock", (10, 8, 124, 84) },
-                { "Block", (11, 5, 124, 84) },
-                { "Attack1", (12, 4, 124, 84) },
-                { "Attack2", (13, 4, 124, 84) },
-                { "Attack3", (14, 4, 124, 84) },
-                { "Spell", (15, 12, 124, 84) },
-                { "SpellSlam", (16, 11, 124, 84) },
-                { "LadderClimb", (17, 8, 124, 84) },
-                { "WallHang", (18, 6, 124, 84) },
-                { "WallClimb", (19, 5, 124, 84) },
-                { "TransformationOut", (20, 8, 124, 84) },
-                { "Dash", (21, 5, 124, 84) },
-                { "Hit", (22, 4, 124, 84) },
-                { "Death", (23, 12, 124, 84) }
-            };
+            // Créer le Viking par défaut
+            // Vous pouvez changer pour créer Spearwoman ou FireWarrior
+            personnageActuel = Personnage.CreerViking(imgViking);
 
-            // Création du personnage Viking
-            viking = new Personnage("Viking", "Viking Portrait.png", "Viking-Sheet.png", imgViking, vikingAnimationMap);
+            // Pour changer de personnage, utilisez :
+            // personnageActuel = Personnage.CreerSpearwoman(imgViking);
+            // personnageActuel = Personnage.CreerFireWarrior(imgViking);
 
-            // Empêcher le zoom de l’image
+            // Empêcher le zoom de l'image
             imgViking.Stretch = Stretch.None;
             imgViking.SnapsToDevicePixels = true;
             imgViking.UseLayoutRounding = true;
@@ -64,39 +40,50 @@ namespace Viking
             {
                 parentWindow.KeyDown += ParentWindow_KeyDown;
             }
-            SpriteOffset.X = 0;
-            SpriteOffset.Y = 0;
-
         }
 
         private void ParentWindow_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Right)
             {
-                SpriteOffset.X = 0;
-                viking.JouerAnimation("Run");
+                personnageActuel.FacingRight = true;
+                personnageActuel.JouerAnimation("Run");
                 Canvas.SetLeft(imgViking, Canvas.GetLeft(imgViking) + 5);
             }
             else if (e.Key == Key.Left)
             {
-                SpriteOffset.X = 0;
-                viking.JouerAnimation("Walk");
+                personnageActuel.FacingRight = false;
+                personnageActuel.JouerAnimation("Walk");
                 Canvas.SetLeft(imgViking, Canvas.GetLeft(imgViking) - 5);
             }
             else if (e.Key == Key.Space)
             {
-                SpriteOffset.X = -20;
-                viking.JouerAnimation("Attack1");
+                personnageActuel.JouerAnimation("Attack1");
             }
             else if (e.Key == Key.D)
             {
-                SpriteOffset.X = 0;
-                viking.JouerAnimation("Death");
+                personnageActuel.JouerAnimation("Death");
             }
             else if (e.Key == Key.I)
             {
-                SpriteOffset.X = 0;
-                viking.JouerAnimation("Idle");
+                personnageActuel.JouerAnimation("Idle");
+            }
+            else if (e.Key == Key.J)
+            {
+                personnageActuel.JouerAnimation("Jump");
+            }
+            // Touches pour changer de personnage
+            else if (e.Key == Key.D1)
+            {
+                personnageActuel = Personnage.CreerViking(imgViking);
+            }
+            else if (e.Key == Key.D2)
+            {
+                personnageActuel = Personnage.CreerSpearwoman(imgViking);
+            }
+            else if (e.Key == Key.D3)
+            {
+                personnageActuel = Personnage.CreerFireWarrior(imgViking);
             }
         }
     }

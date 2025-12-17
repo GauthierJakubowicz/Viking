@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="Viking.UCChoixPerso"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Viking"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Background="White">
+        <Image Source="/img/background_glacial_mountains.png" />
+        <Image Margin="169,225,568,161" Source="/img/Viking Portrait.png" Stretch="Fill"/>
+        <Image Margin="368,225,368,161" Source="/img/Fire_Warrior_Portrait.png" Stretch="Fill"/>
+        <Image Margin="537,225,198,161" Source="/img/Spearwoman_Portrait.png" Stretch="Fill"/>
+        <Label Content="Personnages :" HorizontalAlignment="Center" Margin="0,47,0,0" VerticalAlignment="Top" Width="301" Height="86" FontSize="48"/>
+
+    </Grid>
+</UserControl>

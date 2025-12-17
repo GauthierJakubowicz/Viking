@@ -30,11 +30,11 @@
     <Resource Include="img\Fire_Warrior-Sheet.png" />
     <Resource Include="img\Fire_Warrior_Portrait.png" />
     <Content Include="img\logo_valhalla.ico" />
-    <Resource Include="img\Spearwoman-Sheet.png" />
-    <Resource Include="img\Spearwoman_Portrait.png" />
     <Content Include="Sons\musique_de_fond.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="img\Spearwoman-Sheet.png" />
+    <Resource Include="img\Spearwoman_Portrait.png" />
     <Resource Include="img\Viking Portrait.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>

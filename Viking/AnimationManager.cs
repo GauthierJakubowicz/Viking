@@ -15,9 +15,20 @@ namespace VikingGame
         private int currentFrame = 0;
         private string currentAnimation = "Idle";
         private readonly Image imgTarget;
+        private bool facingRight = true;
 
-        private const int CellWidth = 124;
-        private const int CellHeight = 84;
+        public bool FacingRight
+        {
+            get => facingRight;
+            set
+            {
+                if (facingRight != value)
+                {
+                    facingRight = value;
+                    UpdateImageTransform();
+                }
+            }
+        }
 
         public AnimationManager(
             Image targetImage,
@@ -37,71 +48,57 @@ namespace VikingGame
 
                 var frames = new BitmapSource[count];
 
-                // --- Étape 1 : calcul des bornes globales ---
-                int globalLeft = frameW, globalRight = 0, globalTop = frameH, globalBottom = 0;
-
                 for (int i = 0; i < count; i++)
                 {
-                    var frameCrop = new CroppedBitmap(spriteSheet, new Int32Rect(i * frameW, row * frameH, frameW, frameH));
-                    var pixels = new byte[frameW * frameH * 4];
-                    frameCrop.CopyPixels(pixels, frameW * 4, 0);
+                    // Frame normale
+                    var frameCrop = new CroppedBitmap(
+                        spriteSheet,
+                        new Int32Rect(i * frameW, row * frameH, frameW, frameH)
+                    );
 
-                    int left = frameW, right = 0, top = frameH, bottom = 0;
-
-                    for (int y = 0; y < frameH; y++)
+                    if (!frameCrop.IsFrozen)
                     {
-                        for (int x = 0; x < frameW; x++)
-                        {
-                            byte alpha = pixels[(y * frameW + x) * 4 + 3];
-                            if (alpha != 0)
-                            {
-                                if (x < left) left = x;
-                                if (x > right) right = x;
-                                if (y < top) top = y;
-                                if (y > bottom) bottom = y;
-                            }
-                        }
+                        frameCrop.Freeze();
                     }
 
-                    if (left < globalLeft) globalLeft = left;
-                    if (right > globalRight) globalRight = right;
-                    if (top < globalTop) globalTop = top;
-                    if (bottom > globalBottom) globalBottom = bottom;
-                }
-
-                int spriteW = globalRight - globalLeft + 1;
-                int spriteH = globalBottom - globalTop + 1;
-                int offsetX = (CellWidth - spriteW) / 2 - globalLeft;
-                int offsetY = (CellHeight - spriteH) / 2 - globalTop;
-
-                // --- Étape 2 : création des frames centrées avec offsets globaux ---
-                for (int i = 0; i < count; i++)
-                {
-                    var frameCrop = new CroppedBitmap(spriteSheet, new Int32Rect(i * frameW, row * frameH, frameW, frameH));
-
-                    var dv = new DrawingVisual();
-                    using (var dc = dv.RenderOpen())
-                    {
-                        dc.DrawRectangle(Brushes.Transparent, null, new Rect(0, 0, CellWidth, CellHeight));
-                        dc.DrawImage(frameCrop, new Rect(offsetX, offsetY, frameW, frameH));
-                    }
-
-                    var bmp = new RenderTargetBitmap(CellWidth, CellHeight, 96, 96, PixelFormats.Pbgra32);
-                    bmp.Render(dv);
-                    frames[i] = bmp;
+                    frames[i] = frameCrop;
                 }
 
                 animations[name] = frames;
             }
+
+            // Configuration de l'image cible
+            imgTarget.Stretch = Stretch.None;
+            imgTarget.SnapsToDevicePixels = true;
+            imgTarget.UseLayoutRounding = true;
+            RenderOptions.SetBitmapScalingMode(imgTarget, BitmapScalingMode.NearestNeighbor);
+
+            // Initialiser la transformation
+            UpdateImageTransform();
 
             timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(120) };
             timer.Tick += Animate;
             timer.Start();
         }
 
+        private void UpdateImageTransform()
+        {
+            // Créer une transformation qui retourne l'image si nécessaire
+            var scaleTransform = new ScaleTransform(
+                facingRight ? 1 : -1,  // ScaleX: 1 = normal, -1 = retourné
+                1,                       // ScaleY: toujours 1
+                imgTarget.Width / 2,     // Centre X de la transformation
+                imgTarget.Height / 2     // Centre Y de la transformation
+            );
+
+            imgTarget.RenderTransform = scaleTransform;
+            imgTarget.RenderTransformOrigin = new Point(0.5, 0.5);
+        }
+
         private void Animate(object sender, EventArgs e)
         {
-            if (!animations.TryGetValue(currentAnimation, out var frames) || frames.Length == 0) return;
+            if (!animations.TryGetValue(currentAnimation, out var frames) || frames.Length == 0)
+                return;
 
             imgTarget.Source = frames[currentFrame];
             currentFrame = (currentFrame + 1) % frames.Length;
