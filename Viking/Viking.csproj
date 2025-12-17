@@ -35,7 +35,7 @@
     </Content>
     <Resource Include="img\Spearwoman-Sheet.png" />
     <Resource Include="img\Spearwoman_Portrait.png" />
-    <Resource Include="img\Viking Portrait.png">
+    <Resource Include="img\Viking_Portrait.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="img\Viking-Sheet.png">
